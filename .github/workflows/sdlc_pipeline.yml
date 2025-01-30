@@ -31,10 +31,11 @@ jobs:
           whereis in-toto-run
           in-toto-run || echo "in-toto installation failed!"
 
-      - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
+      - name: Generate in-toto Key (Using Python)
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           echo "Current PATH: $PATH"
+          pip install securesystemslib
           python -c "from in_toto.util import generate_and_write_rsa_keypair; generate_and_write_rsa_keypair('dev')"
           mv dev.pub in-toto.pub
           mv dev in-toto.key
