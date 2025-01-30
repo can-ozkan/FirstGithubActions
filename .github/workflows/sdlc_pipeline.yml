@@ -34,7 +34,7 @@ jobs:
       - name: Run Security Scan (bandit)
         run: |
           pip install bandit
-          bandit -r .
+          bandit -r . --exclude venv
 
       - name: Run Tests (pytest)
         run: |
