@@ -46,7 +46,7 @@ jobs:
 
       - name: Package Application
         run: |
-          tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py .github/README.md
+          tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py README.md
 
       - name: Check Files After Packaging
         run: ls -lah
