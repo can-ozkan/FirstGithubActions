@@ -26,9 +26,11 @@ jobs:
 
       - name: Install in-toto
         run: |
-          pip install in-toto
+          pip3 install in-toto
           echo "Verifying in-toto installation..."
           whereis in-toto-run
+          in-toto-run
+          which in-toto-keygen || echo "-n-toto-keygen error"
           
 
       - name: Install securesystemslib (Fix for in-toto-keygen)
