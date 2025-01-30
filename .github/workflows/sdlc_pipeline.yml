@@ -45,6 +45,20 @@ jobs:
       - name: Package Application
         run: |
           tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py README.md
+
+      - name: Install CycloneDX SBOM Tool
+        run: |
+          pip install cyclonedx-bom
+
+      - name: Generate SBOM
+        run: |
+          cyclonedx-py -o sbom.json
+
+      - name: Upload SBOM Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom_file
+          path: sbom.json
       
       
       - name: Upload Build Artifact
