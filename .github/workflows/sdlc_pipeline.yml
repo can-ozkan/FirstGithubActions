@@ -63,7 +63,7 @@ jobs:
 
       - name: Verify in-toto Layout (SBOM Only)
         run: |
-          in-toto-verify --layout root.layout --layout-keys in-toto.pub
+          in-toto-verify --layout root.layout --layout-keys "$(cat in-toto.pub | jq -r '.keyid')"
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
