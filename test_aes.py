@@ -2,6 +2,7 @@ import base64
 import os
 import pytest
 import sys
+import binascii
 sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 from aes_encryption import encrypt_AES, decrypt_AES
 
@@ -39,7 +40,9 @@ def test_encryption_produces_different_output():
 
 def test_decrypt_invalid_ciphertext():
     """Ensure decryption fails for invalid ciphertexts."""
-    with pytest.raises(Exception) as excinfo:
+    with pytest.raises((binascii.Error, ValueError)) as excinfo:
         decrypt_AES(TEST_KEY, "InvalidCiphertext12345")
-    if "invalid" not in str(excinfo.value).lower():
+    
+    # Check that the error message is related to base64 decoding
+    if "Incorrect padding" not in str(excinfo.value):
         pytest.fail(f"Unexpected exception message: {excinfo.value}")
