@@ -35,8 +35,7 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           echo "Current PATH: $PATH"
-          which in-toto-keygen || echo "in-toto-keygen not found!"
-          in-toto-keygen -n dev -t rsa
+          python -c "from in_toto.util import generate_and_write_rsa_keypair; generate_and_write_rsa_keypair('dev')"
           mv dev.pub in-toto.pub
           mv dev in-toto.key
 
