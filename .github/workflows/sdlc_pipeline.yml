@@ -39,7 +39,7 @@ jobs:
       - name: Run Tests (pytest)
         run: |
           pip install pytest
-          pytest > test_results.log
+          pytest --verbose --disable-warnings
 
       - name: Package Application
         run: |
