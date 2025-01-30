@@ -27,9 +27,11 @@ jobs:
       - name: Install in-toto
         run: |
           pip install in-toto
+          in-toto-run --version  # Verify installation
 
       - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
         run: |
+          export PATH="$HOME/.local/bin:$PATH"
           in-toto-keygen -n dev -t rsa
           mv dev.pub in-toto.pub
           mv dev in-toto.key
