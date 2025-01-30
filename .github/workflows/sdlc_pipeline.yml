@@ -26,8 +26,7 @@ jobs:
 
       - name: Install in-toto
         run: |
-          apt install in-toto
-          pip install in-toto
+          pip3 install in-toto
           echo "Verifying in-toto installation..."
           python -m in_toto.run --version || echo "in-toto installation failed!"
 
