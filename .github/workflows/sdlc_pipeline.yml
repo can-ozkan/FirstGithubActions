@@ -46,7 +46,7 @@ jobs:
 
       - name: Package Application
         run: |
-          tar -czvf aes_project.tar.gz .
+          tar --exclude='.git' --exclude='__pycache__' --exclude='.pytest_cache' -czvf aes_project.tar.gz .
 
       - name: Check Files After Packaging
         run: ls -lah
