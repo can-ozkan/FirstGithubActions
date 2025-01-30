@@ -52,7 +52,7 @@ jobs:
 
       - name: Generate SBOM
         run: |
-          cyclonedx-py requirements -r requirements.txt -o sbom.json
+          cyclonedx-py requirements --input-file requirements.txt --output-file sbom.json
 
       - name: Upload SBOM Artifact
         uses: actions/upload-artifact@v3
