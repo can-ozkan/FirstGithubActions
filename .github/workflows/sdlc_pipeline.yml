@@ -24,14 +24,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Set Up Virtual Environment & Install in-toto
+      - name: Install in-toto
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install --upgrade pip
-          pip install in-toto
+          python -m pip install --upgrade pip
+          pip install --break-system-packages in-toto
           echo "Verifying in-toto installation..."
-          venv/bin/python -m in_toto.run --version || echo "in-toto installation failed!"
+          python -m in_toto.run --version || echo "in-toto installation failed!"
 
       - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
         run: |
