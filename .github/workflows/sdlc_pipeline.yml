@@ -41,9 +41,15 @@ jobs:
           pip install pytest
           PYTHONPATH=$PWD pytest --verbose --disable-warnings
 
+      - name: Check Files Before Packaging
+        run: ls -lah
+
       - name: Package Application
         run: |
           tar -czvf aes_project.tar.gz .
+
+      - name: Check Files After Packaging
+        run: ls -lah
       
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v3
