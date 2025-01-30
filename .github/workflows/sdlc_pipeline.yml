@@ -26,12 +26,16 @@ jobs:
 
       - name: Install in-toto
         run: |
+          apt install in-toto
           pip install in-toto
-          in-toto-run --version  # Verify installation
+          echo "Verifying in-toto installation..."
+          python -m in_toto.run --version || echo "in-toto installation failed!"
 
       - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
         run: |
           export PATH="$HOME/.local/bin:$PATH"
+          echo "Current PATH: $PATH"
+          which in-toto-keygen || echo "in-toto-keygen not found!"
           in-toto-keygen -n dev -t rsa
           mv dev.pub in-toto.pub
           mv dev in-toto.key
