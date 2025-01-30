@@ -67,13 +67,13 @@ jobs:
           in-toto-verify --layout root.layout --layout-key in-toto.pub
 
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: aes_encryption_package
           path: aes_project.tar.gz
 
       - name: Upload SBOM Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sbom_file
           path: sbom.json
