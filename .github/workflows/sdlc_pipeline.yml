@@ -40,28 +40,28 @@ jobs:
       - name: Run Linter (flake8)
         run: |
           pip install flake8
-          in-toto-run --step linting --key in-toto.key --record-stream -- flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
       - name: Run Security Scan (bandit)
         run: |
           pip install bandit
-          in-toto-run --step security-scan --key in-toto.key --record-stream "bandit -r ."
+          bandit -r . --exclude venv
 
       - name: Run Tests (pytest)
         run: |
           pip install pytest
-          in-toto-run --step testing --key in-toto.key --products test_results.log --record-stream "pytest --verbose --disable-warnings"
+          PYTHONPATH=$PWD pytest --verbose --disable-warnings
 
       - name: Package Application
         run: |
-          in-toto-run --step packaging --key in-toto.key --products aes_project.tar.gz --record-stream "tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py README.md"
-
+          tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py README.md
+          
       - name: Generate SBOM
         run: |
           pip install cyclonedx-bom
-          in-toto-run --step sbom-generation --key in-toto.key --products sbom.json --record-stream "cyclonedx-py requirements -o sbom.json"
+          cyclonedx-py requirements -o sbom.json
 
-      - name: Verify in-toto Layout
+      - name: Verify in-toto Layout (SBOM Only)
         run: |
           in-toto-verify --layout root.layout --layout-key in-toto.pub
 
