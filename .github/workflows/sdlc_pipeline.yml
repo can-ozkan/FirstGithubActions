@@ -32,10 +32,9 @@ jobs:
           whereis in-toto-keygen || echo "-n-toto-keygen error"
           
 
-      - name: Install securesystemslib (Fix for in-toto-keygen)
+      - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
         run: |
-          pip install securesystemslib
-          python -c "from securesystemslib.interface import generate_and_write_rsa_keypair; generate_and_write_rsa_keypair('dev')"
+          in-toto-keygen -n dev -t rsa
           mv dev.pub in-toto.pub
           mv dev in-toto.key
 
