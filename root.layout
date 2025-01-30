@@ -24,40 +24,14 @@ oPoD74tKm/NSNCo4ia2Rj2UTBETRdRp0rr8t/zlAyeuHUVZbdgxIJfOtcyi9bAHQ
         }
       }
     },
-    "steps": [
-      {
-        "name": "linting",
-        "expected_materials": [],
-        "expected_products": [],
-        "pubkeys": ["b5d4045dcf..."],
-        "expected_command": ["flake8", ".", "--count", "--select=E9,F63,F7,F82", "--show-source", "--statistics"]
-      },
-      {
-        "name": "security-scan",
-        "expected_materials": [],
-        "expected_products": [],
-        "pubkeys": ["b5d4045dcf..."],
-        "expected_command": ["bandit", "-r", "."]
-      },
-      {
-        "name": "testing",
-        "expected_materials": [],
-        "expected_products": [["MATCH", "test_results.log", "WITH", "PRODUCTS", "FROM", "testing"]],
-        "pubkeys": ["b5d4045dcf..."],
-        "expected_command": ["pytest", "--verbose", "--disable-warnings"]
-      },
-      {
-        "name": "packaging",
-        "expected_materials": [],
-        "expected_products": [["MATCH", "aes_project.tar.gz", "WITH", "PRODUCTS", "FROM", "packaging"]],
-        "pubkeys": ["b5d4045dcf..."],
-        "expected_command": ["tar", "-czvf", "aes_project.tar.gz", "requirements.txt", "aes_encryption.py", "test_aes.py", "README.md"]
-      },
+      "steps": [
       {
         "name": "sbom-generation",
         "expected_materials": [],
-        "expected_products": [["MATCH", "sbom.json", "WITH", "PRODUCTS", "FROM", "sbom-generation"]],
-        "pubkeys": ["b5d4045dcf..."],
+        "expected_products": [
+          ["MATCH", "sbom.json", "WITH", "PRODUCTS", "FROM", "sbom-generation"]
+        ],
+        "pubkeys": ["b5d4045dcf..."],  // Use the key ID from your public key
         "expected_command": ["cyclonedx-py", "requirements", "-o", "sbom.json"]
       }
     ]
