@@ -1,6 +1,7 @@
 import base64
 import os
 import pytest
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
 from aes_encryption import encrypt_AES, decrypt_AES
 
 # Generate a static AES key for testing
