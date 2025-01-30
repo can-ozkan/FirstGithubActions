@@ -29,14 +29,14 @@ jobs:
           pip3 install in-toto
           echo "Verifying in-toto installation..."
           whereis in-toto-run
-          whereis in-toto-keygen || echo "-n-toto-keygen error"
           
 
-      - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
+      - name: Generate Key Paris
         run: |
-          in-toto-keygen -n dev -t rsa
-          mv dev.pub in-toto.pub
-          mv dev in-toto.key
+          openssl genpkey -algorithm RSA -out in-toto.key -pkeyopt rsa_keygen_bits:4096
+          openssl rsa -in in-toto.key -pubout -out in-toto.pub
+          cat in-toto.key
+          cat in-toto.pub
 
       - name: Run Linter (flake8)
         run: |
