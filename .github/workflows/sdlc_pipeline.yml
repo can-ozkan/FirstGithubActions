@@ -29,12 +29,10 @@ jobs:
           pip install in-toto
           echo "Verifying in-toto installation..."
           whereis in-toto-run
-          in-toto-run || echo "in-toto installation failed!"
+          
 
-      - name: Generate in-toto Key (Using Python)
+      - name: Install securesystemslib (Fix for in-toto-keygen)
         run: |
-          export PATH="$HOME/.local/bin:$PATH"
-          echo "Current PATH: $PATH"
           pip install securesystemslib
           python -c "from securesystemslib.interface import generate_and_write_rsa_keypair; generate_and_write_rsa_keypair('dev')"
           mv dev.pub in-toto.pub
