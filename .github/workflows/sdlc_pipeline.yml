@@ -39,7 +39,7 @@ jobs:
       - name: Run Tests (pytest)
         run: |
           pip install pytest
-          pytest --verbose --disable-warnings
+          PYTHONPATH=$PWD pytest --verbose --disable-warnings
 
       - name: Package Application
         run: |
