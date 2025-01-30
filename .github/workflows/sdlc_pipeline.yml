@@ -28,7 +28,8 @@ jobs:
         run: |
           pip install in-toto
           echo "Verifying in-toto installation..."
-          python -m in-toto-run --version || echo "in-toto installation failed!"
+          whereis in-toto-run
+          in-toto-run || echo "in-toto installation failed!"
 
       - name: Generate in-toto Key (For Demo - Should Be Secure in Production)
         run: |
