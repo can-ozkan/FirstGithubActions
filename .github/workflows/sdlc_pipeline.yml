@@ -1,10 +1,12 @@
-name: SDLC Pipeline with in-toto
+name: SDLC Pipeline
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-test:
@@ -24,19 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install in-toto
-        run: |
-          pip3 install in-toto
-          echo "Verifying in-toto installation..."
-          whereis in-toto-run
-          
-
-      - name: Retrieve in-toto Keys from Secrets
-        run: |
-          echo "${{ secrets.IN_TOTO_PRIVATE_KEY }}" > in-toto.key
-          echo "${{ secrets.IN_TOTO_PUBLIC_KEY }}" > in-toto.pub
-          chmod 600 in-toto.key  # Ensure key is secure
-
       - name: Run Linter (flake8)
         run: |
           pip install flake8
@@ -52,27 +41,28 @@ jobs:
           pip install pytest
           PYTHONPATH=$PWD pytest --verbose --disable-warnings
 
+
       - name: Package Application
         run: |
           tar -czvf aes_project.tar.gz requirements.txt aes_encryption.py test_aes.py README.md
-          
-      - name: Generate SBOM
+
+      - name: Install CycloneDX SBOM Tool
         run: |
           pip install cyclonedx-bom
-          cyclonedx-py requirements -o sbom.json
 
-      - name: Verify in-toto Layout (SBOM Only)
+      - name: Generate SBOM
         run: |
-          in-toto-verify --layout root.layout --layout-keys "$(cat in-toto.pub | jq -r '.keyid')"
-
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: aes_encryption_package
-          path: aes_project.tar.gz
+          cyclonedx-py requirements -o sbom.json
 
       - name: Upload SBOM Artifact
         uses: actions/upload-artifact@v4
         with:
           name: sbom_file
           path: sbom.json
+      
+      
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aes_encryption_package
+          path: aes_project.tar.gz
